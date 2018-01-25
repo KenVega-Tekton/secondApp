@@ -24,20 +24,8 @@ function createUser(req, res) {
 }
 
 function getUser(req, res) {
-  // this is a private route cause it needs the token
-  let token = req.header("x-auth");
-
-  UserModel.findByToken(token)
-    .then(user => {
-      // method from Model
-      if (!user) {
-        res.status(400).jsonp();
-      }
-      res.status(200).jsonp(user);
-    })
-    .catch(err => {
-      res.status(500).jsonp(err);
-    });
+  // this is a private route cause it needs the token (is using the middleware now)
+  res.status(200).jsonp(req.user);
 }
 
 module.exports = {

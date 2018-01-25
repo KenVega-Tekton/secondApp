@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const bcrypt = require("bcryptjs");
 
 const UserSchema = new Schema({
   email: {
@@ -41,6 +42,7 @@ UserSchema.pre("save", function(next) {
       });
     });
   } else {
+    console.log("passed");
     next();
   }
 });

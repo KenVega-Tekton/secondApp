@@ -10,7 +10,16 @@ function createUser(req, res) {
 
   newInstanceUser
     .save()
-    .then(newUser => res.status(200).jsonp(newUser))
+    .then(() => {
+      return newInstanceUser.generateAuthToken();
+      //res.status(200).jsonp(newUser)
+    })
+    .then(token => {
+      res
+        .status(200)
+        .header("x-auth", token)
+        .jsonp(newInstanceUser);
+    })
     .catch(err => res.status(400).jsonp(err));
 }
 

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new Schema({
   email: {
@@ -25,8 +26,38 @@ const UserSchema = new Schema({
     type: String,
     required: [true, "Rol is required"],
     enum: ["Admin", "Cajero", "Chef"]
-  }
+  },
+  tokens: [
+    {
+      access: {
+        type: String,
+        required: true
+      },
+      token: {
+        type: String,
+        required: true
+      }
+    }
+  ]
 });
+
+//mongoose Schema methods
+
+// generateAuthToken es un metodo creado para poder crear un token
+UserSchema.methods.generateAuthToken = function() {
+  let user = this; // representa la instancia del modelo (un documento)
+  let access = "auth";
+  let token = jwt
+    .sign({ _id: user._id.toHexString(), access }, "superSecretPass")
+    .toString(); // sign(data a hashear, claveSecreta)
+
+  user.tokens = user.tokens.concat([{ access, token }]);
+  //   user.tokens.push({access, token});
+
+  return user.save().then(() => {
+    return token;
+  });
+};
 
 //mongoose middleware - como express middleware
 // antes de guardar una contraseña, deberia encriptarse

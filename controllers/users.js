@@ -29,11 +29,18 @@ function getUser(req, res) {
 }
 
 function signInUser(req, res) {
-  const userSigningIn = {
+  /*const userSigningIn = {
     email: req.body.email,
     password: req.body.password
-  };
-  res.send(userSigningIn);
+  };*/
+
+  UserModel.findByCredentials(req.body.email, req.body.password)
+    .then(user => {
+      res.status(200).jsonp(user);
+    })
+    .catch(err => {
+      res.status(400).jsonp();
+    });
 }
 
 module.exports = {

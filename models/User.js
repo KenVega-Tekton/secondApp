@@ -111,4 +111,30 @@ UserSchema.statics.findByToken = function(token) {
   });
 };
 
+UserSchema.statics.findByCredentials = function(email, password) {
+  // verificara que hay un usuario con ese email y el password hasheado
+  let User = this;
+
+  return User.findOne({
+    email: email
+  })
+    .then(userFound => {
+      if (!userFound) return Promise.reject();
+      // se verifica que su contraseña hasheada es la misma que esta en la BD
+
+      return new Promise((resolve, reject) => {
+        bcrypt.compare(password, userFound.password, (err, result) => {
+          if (result) {
+            resolve(userFound);
+          } else {
+            reject();
+          }
+        });
+      });
+    })
+    .catch(err => {
+      console.log("error finding the user that is trying to signing in: ", err);
+    });
+};
+
 module.exports = mongoose.model("UserModel", UserSchema);

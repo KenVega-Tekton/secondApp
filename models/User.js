@@ -43,6 +43,19 @@ const UserSchema = new Schema({
 
 //mongoose Schema methods
 
+// overriding a method to change what is sended back as response when signing up a new user - toJSON is a function that is used when res.send is called
+UserSchema.methods.toJSON = function() {
+  let user = this;
+  let userObject = user.toObject();
+
+  let userObjectModified = {
+    _id: userObject._id,
+    email: userObject.email
+  };
+
+  return userObjectModified;
+};
+
 // generateAuthToken es un metodo creado para poder crear un token
 UserSchema.methods.generateAuthToken = function() {
   let user = this; // representa la instancia del modelo (un documento)

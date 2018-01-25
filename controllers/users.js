@@ -29,14 +29,15 @@ function getUser(req, res) {
 }
 
 function signInUser(req, res) {
-  /*const userSigningIn = {
-    email: req.body.email,
-    password: req.body.password
-  };*/
-
   UserModel.findByCredentials(req.body.email, req.body.password)
     .then(user => {
-      res.status(200).jsonp(user);
+      return user.generateAuthToken().then(token => {
+        res
+          .status(200)
+          .header("x-auth", token)
+          .jsonp(user);
+      });
+      //res.status(200).jsonp(user);
     })
     .catch(err => {
       res.status(400).jsonp();

@@ -76,7 +76,7 @@ UserSchema.methods.generateAuthToken = function() {
 // antes de guardar una contraseña, deberia encriptarse
 
 UserSchema.pre("save", function(next) {
-  let user = this;
+  let user = this; // representa la instancia del modelo (un documento)
 
   if (user.isModified("password")) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -90,5 +90,25 @@ UserSchema.pre("save", function(next) {
     next();
   }
 });
+
+//Model methods
+UserSchema.statics.findByToken = function(token) {
+  let User = this; // representa el Modelo en sí
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, "superSecretPass");
+  } catch (e) {
+    console.log("el token devuelto no es el correcto, no confíes");
+    return Promise.reject();
+  }
+
+  return User.findOne({
+    // esto retorna una promesa
+    _id: decoded._id,
+    "tokens.token": token,
+    "tokens.access": "auth"
+  });
+};
 
 module.exports = mongoose.model("UserModel", UserSchema);

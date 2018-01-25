@@ -28,7 +28,16 @@ function getUser(req, res) {
   res.status(200).jsonp(req.user);
 }
 
+function signInUser(req, res) {
+  const userSigningIn = {
+    email: req.body.email,
+    password: req.body.password
+  };
+  res.send(userSigningIn);
+}
+
 module.exports = {
   createUser,
-  getUser
+  getUser,
+  signInUser
 };

@@ -86,7 +86,7 @@ UserSchema.pre("save", function(next) {
       });
     });
   } else {
-    console.log("passed");
+    // this case occurs when a request does not change the password (almost always)
     next();
   }
 });

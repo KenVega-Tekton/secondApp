@@ -50,7 +50,9 @@ UserSchema.methods.toJSON = function() {
 
   let userObjectModified = {
     _id: userObject._id,
-    email: userObject.email
+    email: userObject.email,
+    rol: userObject.rol,
+    name: userObject.name
   };
 
   return userObjectModified;

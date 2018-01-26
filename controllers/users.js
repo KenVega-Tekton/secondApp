@@ -44,8 +44,21 @@ function signInUser(req, res) {
     });
 }
 
+function deleteToken(req, res) {
+  // ruta privada, debes estar logueado para hacer sign out
+  req.user
+    .removeToken(req.token)
+    .then(() => {
+      res.status(200).jsonp();
+    })
+    .catch(err => {
+      res.status(400).jsonp(err);
+    }); // instance method
+}
+
 module.exports = {
   createUser,
   getUser,
-  signInUser
+  signInUser,
+  deleteToken
 };

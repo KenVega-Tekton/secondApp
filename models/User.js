@@ -72,6 +72,22 @@ UserSchema.methods.generateAuthToken = function() {
   });
 };
 
+UserSchema.methods.removeToken = function(token) {
+  // borrar el token del usuario
+  // se usara $pull // quitar items de un array que hacen match con un filtro
+
+  let user = this;
+
+  return user.update({
+    // retorna una promesa
+    $pull: {
+      tokens: {
+        token: token // si el token está, remueve todo tokens (con access )
+      }
+    }
+  });
+};
+
 //mongoose middleware - como express middleware
 // antes de guardar una contraseña, deberia encriptarse
 

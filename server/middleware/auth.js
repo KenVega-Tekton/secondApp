@@ -14,7 +14,7 @@ const authenticate = (req, res, next) => {
 
       // the cashier can only post new orders. nothing more
       if (
-        user.rol === "cajero" &&
+        user.role === "cajero" &&
         req.path === "/order" &&
         req.method !== "POST"
       ) {
@@ -24,7 +24,7 @@ const authenticate = (req, res, next) => {
 
       // the chef can't post or delete orders, only get them and update them
       if (
-        user.rol === "chef" &&
+        user.role === "chef" &&
         req.path === "/order" &&
         (req.method === "POST" || req.method === "DELETE")
       ) {

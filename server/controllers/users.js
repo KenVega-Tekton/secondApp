@@ -5,23 +5,23 @@ function createUser(req, res) {
     email: req.body.email,
     name: req.body.name,
     password: req.body.password,
-    rol: req.body.rol
+    role: req.body.role
   });
 
   newInstanceUser
     .save()
     .then(() => {
-      console.log("newInstanceUser: ", newInstanceUser);
+      //console.log("newInstanceUser: ", newInstanceUser);
       return newInstanceUser.generateAuthToken();
       //res.status(200).jsonp(newUser)
     })
-    .then(token => {
+    .then((token) => {
       res
         .status(200)
         .header("x-auth", token)
         .jsonp(newInstanceUser);
     })
-    .catch(err => res.status(400).jsonp(err));
+    .catch((err) => res.status(400).jsonp(err));
 }
 
 function getUser(req, res) {
@@ -31,8 +31,8 @@ function getUser(req, res) {
 
 function signInUser(req, res) {
   UserModel.findByCredentials(req.body.email, req.body.password)
-    .then(user => {
-      return user.generateAuthToken().then(token => {
+    .then((user) => {
+      return user.generateAuthToken().then((token) => {
         res
           .status(200)
           .header("x-auth", token)
@@ -40,7 +40,7 @@ function signInUser(req, res) {
       });
       //res.status(200).jsonp(user);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).jsonp();
     });
 }
@@ -52,7 +52,7 @@ function deleteToken(req, res) {
     .then(() => {
       res.status(200).jsonp();
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).jsonp(err);
     }); // instance method
 }

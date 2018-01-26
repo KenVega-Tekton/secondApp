@@ -23,9 +23,9 @@ const UserSchema = new Schema(
       type: String,
       required: [true, "Password is required"]
     },
-    rol: {
+    role: {
       type: String,
-      required: [true, "Rol is required"],
+      required: [true, "role is required"],
       enum: ["admin", "cajero", "chef"]
     },
     tokens: [
@@ -54,7 +54,7 @@ UserSchema.methods.toJSON = function() {
   let userObjectModified = {
     _id: userObject._id,
     email: userObject.email,
-    rol: userObject.rol,
+    role: userObject.role,
     name: userObject.name
   };
 
@@ -66,7 +66,7 @@ UserSchema.methods.generateAuthToken = function() {
   let access = "auth";
   let token = jwt
     .sign(
-      { _id: user._id.toHexString(), access, rol: user.rol },
+      { _id: user._id.toHexString(), access, role: user.role },
       "superSecretPass"
     )
     .toString();

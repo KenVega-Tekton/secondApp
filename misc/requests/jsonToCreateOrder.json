@@ -1,0 +1,19 @@
+{
+  "state": "comanda",
+  "clientName": "John Doe",
+  "createdAt": 12341235,
+  "paymentType": "card",
+  "total": 33,
+  "orderDetails": [
+    {
+      "dishName": "plato 1",
+      "dishPrice": 10,
+      "quantity": 2
+    },
+    {
+      "dishName": "plato 2",
+      "dishPrice": 13,
+      "quantity": 1
+    }
+  ]
+}

@@ -3,43 +3,46 @@ const { Schema } = mongoose;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const UserSchema = new Schema({
-  email: {
-    type: String,
-    minlength: 1,
-    required: [true, "Email is required"],
-    unique: [true, "Email already registered"],
-    lowercase: true,
-    trim: true
-  },
-  name: {
-    type: String,
-    required: [true, "Name is required"],
-    minlength: 1,
-    trim: true
-  },
-  password: {
-    type: String,
-    required: [true, "Password is required"]
-  },
-  rol: {
-    type: String,
-    required: [true, "Rol is required"],
-    enum: ["Admin", "Cajero", "Chef"]
-  },
-  tokens: [
-    {
-      access: {
-        type: String,
-        required: true
-      },
-      token: {
-        type: String,
-        required: true
+const UserSchema = new Schema(
+  {
+    email: {
+      type: String,
+      minlength: 1,
+      required: [true, "Email is required"],
+      unique: [true, "Email already registered"],
+      lowercase: true,
+      trim: true
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+      minlength: 1,
+      trim: true
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"]
+    },
+    rol: {
+      type: String,
+      required: [true, "Rol is required"],
+      enum: ["admin", "cajero", "chef"]
+    },
+    tokens: [
+      {
+        access: {
+          type: String,
+          required: true
+        },
+        token: {
+          type: String,
+          required: true
+        }
       }
-    }
-  ]
-});
+    ]
+  },
+  { collection: "userCollection" }
+);
 
 //mongoose Schema methods
 

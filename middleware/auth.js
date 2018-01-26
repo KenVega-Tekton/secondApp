@@ -15,7 +15,7 @@ const authenticate = (req, res, next) => {
       console.log("que informacion trae este user: ", user);
       console.log("necesito la ruta : ", req.path);
 
-      if (user.rol !== "Cajero" && req.path === "/dish") {
+      if (user.rol !== "cajero" && req.path === "/dish") {
         //bloquear
         res.status(403).jsonp();
         return Promise.reject();

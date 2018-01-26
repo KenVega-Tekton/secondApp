@@ -56,16 +56,17 @@ UserSchema.methods.toJSON = function() {
   return userObjectModified;
 };
 
-// generateAuthToken es un metodo creado para poder crear un token
 UserSchema.methods.generateAuthToken = function() {
   let user = this; // representa la instancia del modelo (un documento)
   let access = "auth";
   let token = jwt
-    .sign({ _id: user._id.toHexString(), access }, "superSecretPass")
-    .toString(); // sign(data a hashear, claveSecreta)
+    .sign(
+      { _id: user._id.toHexString(), access, rol: user.rol },
+      "superSecretPass"
+    )
+    .toString();
 
   user.tokens = user.tokens.concat([{ access, token }]);
-  //   user.tokens.push({access, token});
 
   return user.save().then(() => {
     return token;
@@ -73,13 +74,9 @@ UserSchema.methods.generateAuthToken = function() {
 };
 
 UserSchema.methods.removeToken = function(token) {
-  // borrar el token del usuario
-  // se usara $pull // quitar items de un array que hacen match con un filtro
-
   let user = this;
 
   return user.update({
-    // retorna una promesa
     $pull: {
       tokens: {
         token: token // si el token está, remueve todo tokens (con access )
@@ -134,9 +131,10 @@ UserSchema.statics.findByCredentials = function(email, password) {
   return User.findOne({
     email: email
   })
-    .then(userFound => {
-      if (!userFound) return Promise.reject();
-      // se verifica que su contraseña hasheada es la misma que esta en la BD
+    .then((userFound) => {
+      if (!userFound) {
+        return Promise.reject();
+      }
 
       return new Promise((resolve, reject) => {
         bcrypt.compare(password, userFound.password, (err, result) => {
@@ -148,7 +146,7 @@ UserSchema.statics.findByCredentials = function(email, password) {
         });
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("error finding the user that is trying to signing in: ", err);
     });
 };

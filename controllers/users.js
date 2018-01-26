@@ -11,6 +11,7 @@ function createUser(req, res) {
   newInstanceUser
     .save()
     .then(() => {
+      console.log("newInstanceUser: ", newInstanceUser);
       return newInstanceUser.generateAuthToken();
       //res.status(200).jsonp(newUser)
     })

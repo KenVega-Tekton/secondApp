@@ -23,7 +23,22 @@ function createOrder(req, res) {
     });
 }
 
+function updateOrder(req, res) {
+  OrderModel.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $set: { state: req.body.state } },
+    { new: true }
+  )
+    .then((order) => {
+      res.status(200).jsonp(order);
+    })
+    .catch((err) => {
+      res.status(400).jsonp(error);
+    });
+}
+
 module.exports = {
   getOrders,
-  createOrder
+  createOrder,
+  updateOrder
 };

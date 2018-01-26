@@ -1,7 +1,6 @@
 {
   "state": "comanda",
   "clientName": "John Doe",
-  "createdAt": 12341235,
   "paymentType": "card",
   "total": 33,
   "orderDetails": [

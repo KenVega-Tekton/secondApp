@@ -6,7 +6,7 @@ class AddOrderRowDish extends Component {
       <div className="form-row">
         <div className="form-group col-7">
           <label>
-            Dish {this.props.id + 1} -> (S/. {this.props.dish.dishPrice})
+            Dish {this.props.id + 1} -> (S/. {this.props.dish.price})
           </label>
           <input
             type="text"

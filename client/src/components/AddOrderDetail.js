@@ -12,12 +12,13 @@ class AddOrderDetail extends Component {
       dishesAvailable: [],
       dishRowSelected: [
         {
-          dishName: "",
+          name: "",
           quantity: 1,
-          dishPrice: 0
+          price: 0
         }
       ],
-      totalOwed: 0
+      totalOwed: 0,
+      token: localStorage.getItem("tokenAuth")
     };
 
     this.addRowDish = this.addRowDish.bind(this);
@@ -31,7 +32,16 @@ class AddOrderDetail extends Component {
   }
 
   getDishes() {
-    axios.get("/api/dish").then(response => {
+    const getDishesRequest = {
+      method: "GET",
+      url: "/api/dish",
+      headers: {
+        "x-auth": this.state.token
+      },
+      json: true
+    };
+
+    axios(getDishesRequest).then(response => {
       this.setState({
         dishesAvailable: response.data
       });
@@ -49,7 +59,7 @@ class AddOrderDetail extends Component {
     this.setState({
       dishRowSelected: [
         ...this.state.dishRowSelected,
-        { dishName: "", quantity: 1, dishPrice: 0 }
+        { name: "", quantity: 1, price: 0 }
       ]
     });
   }
@@ -74,16 +84,16 @@ class AddOrderDetail extends Component {
   checkingDishName(event) {
     let arrayFoo = this.state.dishRowSelected;
 
-    arrayFoo[event.target.id.slice(9)].dishName = event.target.value;
+    arrayFoo[event.target.id.slice(9)].name = event.target.value;
 
     let dishFound = this.state.dishesAvailable.find(dish => {
-      return dish.dishName === event.target.value ? dish : 0;
+      return dish.name === event.target.value ? dish : 0;
     });
 
     if (dishFound) {
-      arrayFoo[event.target.id.slice(9)].dishPrice = dishFound.dishPrice;
+      arrayFoo[event.target.id.slice(9)].price = dishFound.price;
     } else {
-      arrayFoo[event.target.id.slice(9)].dishPrice = 0;
+      arrayFoo[event.target.id.slice(9)].price = 0;
     }
 
     this.setState({
@@ -109,7 +119,7 @@ class AddOrderDetail extends Component {
     let total = 0;
 
     this.state.dishRowSelected.forEach(dish => {
-      total += dish.dishPrice * dish.quantity;
+      total += dish.price * dish.quantity;
     });
 
     this.setState({
@@ -131,30 +141,21 @@ class AddOrderDetail extends Component {
 
     console.log("newOrder que se enviara : ", newOrder);
 
-    axios
-      .post("/api/order", newOrder)
+    const createOrderRequest = {
+      method: "POST",
+      data: newOrder,
+      url: "/api/order",
+      headers: {
+        "x-auth": this.state.token
+      },
+      json: true
+    };
+
+    axios(createOrderRequest)
       .then(response => {
         console.log(response);
       })
       .catch(err => console.log(err));
-
-    /*
-      "state": "comanda",
-      "clientName": "John Doe",
-      "createdAt": 245,
-      "paymentType": "tarjeta",
-      "total": 23,
-      "orderDetails": [
-        {
-          "dishName": "plato 1",
-          "dishPrice": 10
-        },
-        {
-          "dishName": "plato 2",
-          "dishPrice": 13
-        }
-      ]
-    */
   }
 
   renderDetails() {
@@ -179,7 +180,7 @@ class AddOrderDetail extends Component {
         <datalist id="dishesAvailable">
           {this.state.dishesAvailable
             ? this.state.dishesAvailable.map(dish => (
-                <option value={dish.dishName} key={dish._id} />
+                <option value={dish.name} key={dish._id} />
               ))
             : null}
         </datalist>

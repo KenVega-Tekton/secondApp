@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 
 class Header extends Component {
+  signOutUser() {
+    console.log("se va a quitar el usuario");
+    // quitar el token de auth y redirigir a home o logueo o registro
+  }
+
   render() {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
@@ -52,6 +57,9 @@ class Header extends Component {
                 <a href="/register" className="nav-link">
                   Register
                 </a>
+              </li>
+              <li className="nav-item" onClick={this.signOutUser}>
+                <a className="nav-link">Log Out</a>
               </li>
             </ul>
           </div>

@@ -8,19 +8,33 @@ class Orders extends Component {
     super(props);
 
     this.state = {
-      orders: []
+      orders: [],
+      token: localStorage.getItem("tokenAuth")
     };
 
     this.changeOrderState = this.changeOrderState.bind(this);
   }
 
   getOrders() {
-    axios.get("/api/order").then(response => {
-      this.setState({
-        orders: response.data
+    const getOrdersRequest = {
+      method: "GET",
+      url: "/api/order",
+      headers: {
+        "x-auth": this.state.token
+      },
+      json: true
+    };
+
+    axios(getOrdersRequest)
+      .then(response => {
+        this.setState({
+          orders: response.data
+        });
+        console.log(response);
+      })
+      .catch(err => {
+        console.log("error : ", err);
       });
-      console.log(response);
-    });
   }
 
   componentWillMount() {
@@ -53,16 +67,24 @@ class Orders extends Component {
       }
     });
 
-    axios
-      .put(`/api/order/${event.target.id}`, { state: stateNew })
+    const updateOrderRequest = {
+      method: "PUT",
+      url: `/api/order/${event.target.id}`,
+      data: { state: stateNew },
+      headers: {
+        "x-auth": this.state.token
+      },
+      json: true
+    };
+
+    axios(updateOrderRequest)
       .then(response => {
         console.log(response);
       })
       .catch(err => {
-        console.log(err);
+        console.log("error : ", err);
       });
 
-    // cambiar el estado de la especifica orden, luego react se encargara de renderizar el resto.
     // para conseguir nuevas ordenes la pagina tendra que ser actualizada periodicamente o tendras que usar algo como websockets
   }
 

@@ -29,7 +29,7 @@ class OrderCard extends Component {
                   <OrderDish
                     key={id2}
                     id={id2}
-                    dishName={orderDetail.dishName}
+                    name={orderDetail.name}
                     quantity={orderDetail.quantity}
                   />
                 );

@@ -65,7 +65,7 @@ class AddOrderDetail extends Component {
   }
 
   deleteRowDish(event) {
-    //falta mejorar esta funcion . hay un prolema con asincronia
+    //MEJORAR esta funcion . hay un prolema con asincronia
 
     event.preventDefault();
 

@@ -68,6 +68,12 @@ class Header extends Component {
               </li>
 
               <li className="nav-item">
+                <a href="/admin" className="nav-link">
+                  Admin
+                </a>
+              </li>
+
+              <li className="nav-item">
                 <a href="/login" className="nav-link">
                   Login
                 </a>

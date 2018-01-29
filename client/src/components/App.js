@@ -4,6 +4,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Header from "./Header";
 import AddOrder from "./AddOrder";
 import Orders from "./Orders";
+import Admin from "./Admin";
 import Register from "./Register";
 import Login from "./Login";
 import Home from "./Home";
@@ -19,6 +20,8 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/add-order" component={AddOrder} />
           <Route path="/manage-orders" component={Orders} />
+          <Route path="/admin" component={Admin} />
+
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
         </div>

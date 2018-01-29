@@ -1,12 +1,12 @@
 import React from "react";
 
-const About = props => {
+const About = (props) => {
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-10 mx-auto">
           <div className="card card-body text-center">
-            <h3>About Page</h3>
+            <h3 className="mb-3">About Page</h3>
             <p>
               This is a full-stack app made with React, Node.js and MongoDB.
             </p>

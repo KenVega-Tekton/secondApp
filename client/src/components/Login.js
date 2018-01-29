@@ -20,7 +20,7 @@ class Login extends Component {
 
     axios
       .post("/signin", data)
-      .then(response => {
+      .then((response) => {
         console.log(response);
         console.log("header token : ", response.headers["x-auth"]);
 
@@ -35,11 +35,14 @@ class Login extends Component {
           case "chef":
             this.props.history.push("/manage-orders");
             break;
+          case "admin":
+            this.props.history.push("/admin");
+            break;
           default:
             console.log("there was and error signin up");
         }
       })
-      .catch(err => console.log("there was an error : " + err));
+      .catch((err) => console.log("there was an error : " + err));
   }
 
   render() {

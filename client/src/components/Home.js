@@ -1,12 +1,12 @@
 import React from "react";
 
-const Home = props => {
+const Home = (props) => {
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-10 mx-auto">
           <div className="card card-body text-center">
-            <h3>Home Page</h3>
+            <h3 className="mb-3">Home Page</h3>
             <p>A webapp made to manage restaurants.</p>
             <p>
               <a

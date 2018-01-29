@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import OrderDish from "./OrderDish";
+import moment from "moment";
 
 class OrderCard extends Component {
   render() {
@@ -10,11 +11,13 @@ class OrderCard extends Component {
             Name : <strong>{this.props.order.clientName}</strong>
           </div>
           <div className="ml-auto">
-            <strong>{this.props.order.createdAt}</strong>
+            <strong>
+              {moment(this.props.order.createdAt).format("DD/MM/YY, HH:mm")}
+            </strong>
           </div>
         </div>
 
-        <div className="card-body">
+        <div className="card-body text-center">
           <table className="table table-striped table-sm table-bordered mb-0">
             <thead>
               <tr>

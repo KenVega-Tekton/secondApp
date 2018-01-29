@@ -4,10 +4,6 @@ class Header extends Component {
   constructor(props) {
     super(props);
 
-    /*let session = localStorage.getItem("tokenAuth")
-      ? JSON.parse(sessionStorage.getItem("tokenAuth"))
-      : false;*/
-
     this.state = {
       session: localStorage.getItem("tokenAuth")
         ? JSON.parse(sessionStorage.getItem("tokenAuth"))

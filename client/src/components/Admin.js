@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import moment from "moment";
 
 class Admin extends Component {
   constructor(props) {
@@ -23,14 +24,14 @@ class Admin extends Component {
     };
 
     axios(getOrdersRequest)
-      .then(response => {
+      .then((response) => {
         this.setState({
           orders: response.data
         });
 
         let totalFoo = 0;
 
-        response.data.forEach(order => {
+        response.data.forEach((order) => {
           totalFoo += order.total;
         });
 
@@ -39,7 +40,7 @@ class Admin extends Component {
         });
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("error : ", err);
       });
   }
@@ -52,12 +53,11 @@ class Admin extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-md-12 mx-auto">
-            <h2>Admin</h2>
-            <h3>Orders Report</h3>
+          <div className="col">
+            <h3 className="text-center">Orders Report</h3>
 
-            <div className="card-body">
-              <table className="table table-striped table-sm table-bordered mb-0">
+            <div className="card-body table-responsive text-center">
+              <table className="table table-striped table-bordered mb-0">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -75,18 +75,26 @@ class Admin extends Component {
                         <th scope="row">{id + 1}</th>
                         <td>{order.clientName}</td>
                         <td>{order.state}</td>
-                        <td>{order.createdAt}</td>
+                        <td>
+                          {moment(order.createdAt).format("DD/MM/YY, HH:mm")}
+                        </td>
                         <td>{order.paymentType}</td>
                         <td>{order.total}</td>
                       </tr>
                     );
                   })}
+                  <tr>
+                    <th scope="row"> </th>
+                    <td colSpan="3"> </td>
+                    <td className="table-success">
+                      <strong>Cash Flow</strong>
+                    </td>
+                    <td className="table-success">
+                      <strong>{this.state.totalGained}</strong>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
-            </div>
-
-            <div className="text-right mr-4">
-              Flujo de caja: <strong>{this.state.totalGained}</strong>
             </div>
           </div>
         </div>

@@ -26,13 +26,13 @@ class Orders extends Component {
     };
 
     axios(getOrdersRequest)
-      .then(response => {
+      .then((response) => {
         this.setState({
           orders: response.data
         });
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("error : ", err);
       });
   }
@@ -78,10 +78,10 @@ class Orders extends Component {
     };
 
     axios(updateOrderRequest)
-      .then(response => {
+      .then((response) => {
         console.log(response);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log("error : ", err);
       });
 
@@ -94,7 +94,7 @@ class Orders extends Component {
         <div>
           {this.state.orders.map((order, id) => {
             if (order.state === orderState) {
-              order.createdAt = new Date(order.createdAt).toDateString();
+              //order.createdAt = new Date(order.createdAt).toDateString();
               return (
                 <div key={id}>
                   <OrderCard

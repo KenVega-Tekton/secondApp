@@ -16,7 +16,6 @@ class AddOrderRowDish extends Component {
             autoComplete="off"
             onChange={this.props.checkingDishName}
             id={`inputDish${this.props.id}`}
-            value={this.props.dish.dishName}
           />
         </div>
         <div className="form-group col-3">

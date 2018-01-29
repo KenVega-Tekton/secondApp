@@ -190,7 +190,7 @@ class AddOrderDetail extends Component {
 
   render() {
     return (
-      <div>
+      <form>
         <div className="form-group">
           <label htmlFor="clientName">Client Name</label>
           <input
@@ -287,7 +287,7 @@ class AddOrderDetail extends Component {
             Submit
           </button>
         </div>
-      </div>
+      </form>
     );
   }
 }

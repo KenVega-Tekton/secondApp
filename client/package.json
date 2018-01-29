@@ -8,6 +8,9 @@
     },
     "/signup": {
       "target": "http://localhost:5000"
+    },
+    "/signin": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

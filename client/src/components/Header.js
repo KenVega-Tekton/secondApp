@@ -1,9 +1,26 @@
 import React, { Component } from "react";
 
 class Header extends Component {
-  signOutUser() {
-    console.log("se va a quitar el usuario");
-    // quitar el token de auth y redirigir a home o logueo o registro
+  constructor(props) {
+    super(props);
+
+    /*let session = localStorage.getItem("tokenAuth")
+      ? JSON.parse(sessionStorage.getItem("tokenAuth"))
+      : false;*/
+
+    this.state = {
+      session: localStorage.getItem("tokenAuth")
+        ? JSON.parse(sessionStorage.getItem("tokenAuth"))
+        : false
+    };
+
+    this.signOutUser = this.signOutUser.bind(this);
+  }
+
+  signOutUser(event) {
+    event.preventDefault();
+    localStorage.removeItem("tokenAuth");
+    this.props.history.push("/");
   }
 
   render() {
@@ -43,21 +60,25 @@ class Header extends Component {
                   Orders
                 </a>
               </li>
+
               <li className="nav-item">
                 <a href="/add-order" className="nav-link">
                   Add Order
                 </a>
               </li>
+
               <li className="nav-item">
                 <a href="/login" className="nav-link">
                   Login
                 </a>
               </li>
+
               <li className="nav-item">
                 <a href="/register" className="nav-link">
                   Register
                 </a>
               </li>
+
               <li className="nav-item" onClick={this.signOutUser}>
                 <a className="nav-link">Log Out</a>
               </li>

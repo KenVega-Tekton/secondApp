@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AddOrderForm from "./AddOrderForm";
+import AddOrderDetail from "./AddOrderDetail";
 
 class AddOrder extends Component {
   render() {
@@ -15,7 +15,7 @@ class AddOrder extends Component {
             <hr />*/}
 
             <h3 className="text-center">Add Order</h3>
-            <AddOrderForm />
+            <AddOrderDetail />
           </div>
         </div>
       </div>

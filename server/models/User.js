@@ -11,7 +11,13 @@ const UserSchema = new Schema(
       required: [true, "Email is required"],
       unique: [true, "Email already registered"],
       lowercase: true,
-      trim: true
+      trim: true,
+      validate: {
+        validator: function(v) {
+          return v.indexOf("tekton") > -1;
+        },
+        message: "{VALUE} is not a valid email"
+      }
     },
     name: {
       type: String,

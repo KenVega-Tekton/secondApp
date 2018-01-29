@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 
 import axios from "axios";
 
@@ -109,11 +109,37 @@ class App extends Component {
 
             <Route exact path="/" component={this.renderHome()} />
             <Route path="/about" component={About} />
-            <Route path="/add-order" component={AddOrder} />
-            <Route path="/manage-orders" component={Orders} />
-            <Route path="/admin" component={Admin} />
 
-            <Route path="/register" component={Register} />
+            <Route
+              path="/add-order"
+              render={() =>
+                this.state.currentUser ? <AddOrder /> : <Redirect to="/" />
+              }
+            />
+            {/*<Route path="/manage-orders" component={Orders} />*/}
+            <Route
+              path="/manage-orders"
+              render={() =>
+                this.state.currentUser ? <Orders /> : <Redirect to="/" />
+              }
+            />
+
+            <Route
+              path="/admin"
+              render={() =>
+                this.state.currentUser ? <Admin /> : <Redirect to="/" />
+              }
+            />
+
+            <Route
+              path="/register"
+              render={(props) => (
+                <Register
+                  updateCurrentUser={this.updateCurrentUser}
+                  {...props}
+                />
+              )}
+            />
             <Route
               path="/login"
               render={(props) => (

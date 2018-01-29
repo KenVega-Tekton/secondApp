@@ -25,15 +25,10 @@ class Register extends Component {
       axios
         .post("/signup", data)
         .then((response) => {
-          console.log("respuesta del servidor");
-          console.log(response);
+          this.props.updateCurrentUser(response.data);
 
-          console.log("header token : ", response.headers["x-auth"]);
-
-          // guardar token en localstorage
           localStorage.setItem("tokenAuth", response.headers["x-auth"]);
-          //    borrar ese token cuando se carga la aplicacion
-          //luego redireccionar
+
           switch (response.data.role) {
             case "cajero":
               this.props.history.push("/add-order");

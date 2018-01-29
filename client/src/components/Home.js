@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = (props) => {
   return (
@@ -9,21 +10,13 @@ const Home = (props) => {
             <h3 className="mb-3">Home Page</h3>
             <p>A webapp made to manage restaurants.</p>
             <p>
-              <a
-                href="/login"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
+              <Link to="/login" className="btn btn-primary">
                 Login
-              </a>
+              </Link>
               &nbsp;or&nbsp;
-              <a
-                href="/register"
-                rel="noopener noreferrer"
-                className="btn btn-primary"
-              >
+              <Link to="/register" className="btn btn-primary">
                 Register
-              </a>
+              </Link>
             </p>
           </div>
         </div>

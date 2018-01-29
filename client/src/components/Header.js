@@ -1,31 +1,95 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   constructor(props) {
     super(props);
 
+    /*
     this.state = {
-      session: localStorage.getItem("tokenAuth")
-        ? JSON.parse(sessionStorage.getItem("tokenAuth"))
-        : false
+      canAccess: this.props.currentUser ? this.props.currentUser.role : false
     };
+    */
 
     this.signOutUser = this.signOutUser.bind(this);
   }
 
-  signOutUser(event) {
-    event.preventDefault();
-    localStorage.removeItem("tokenAuth");
+  signOutUser() {
+    this.props.signOutUser();
     this.props.history.push("/");
+  }
+
+  setHomeRoute() {
+    if (this.props.currentUser) {
+      switch (this.props.currentUser.role) {
+        case "chef":
+          return "/manage-orders";
+        case "cajero":
+          return "/add-order";
+        case "admin":
+          return "/admin";
+        default:
+          return null;
+      }
+    } else {
+      return "/";
+    }
+  }
+
+  renderUserName() {
+    if (this.props.currentUser) {
+      return (
+        <li className="nav-item active">
+          <span className="nav-link">
+            Welcome {this.props.currentUser.name}
+          </span>
+        </li>
+      );
+    }
+  }
+
+  renderLinkViews() {
+    if (this.props.currentUser) {
+      switch (this.props.currentUser.role) {
+        case "chef":
+          return (
+            <li className="nav-item">
+              <Link to="/manage-orders" className="nav-link">
+                Orders
+              </Link>
+            </li>
+          );
+        case "cajero":
+          return (
+            <li className="nav-item">
+              <Link to="/add-order" className="nav-link">
+                Add Order
+              </Link>
+            </li>
+          );
+        case "admin":
+          return (
+            <li className="nav-item">
+              <Link to="/admin" className="nav-link">
+                Admin
+              </Link>
+            </li>
+          );
+        default:
+          return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   render() {
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-primary mb-3">
         <div className="container">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to={this.setHomeRoute()}>
             React App
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -40,50 +104,43 @@ class Header extends Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <Link to={this.setHomeRoute()} className="nav-link">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/about">
+                <Link to="/about" className="nav-link">
                   About
-                </a>
+                </Link>
               </li>
             </ul>
+
             <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <a href="/manage-orders" className="nav-link">
-                  Orders
-                </a>
-              </li>
+              {this.renderUserName()}
 
-              <li className="nav-item">
-                <a href="/add-order" className="nav-link">
-                  Add Order
-                </a>
-              </li>
+              {this.renderLinkViews()}
 
-              <li className="nav-item">
-                <a href="/admin" className="nav-link">
-                  Admin
-                </a>
-              </li>
+              {!this.props.currentUser ? (
+                <li className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </li>
+              ) : null}
 
-              <li className="nav-item">
-                <a href="/login" className="nav-link">
-                  Login
-                </a>
-              </li>
+              {!this.props.currentUser ? (
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link">
+                    Register
+                  </Link>
+                </li>
+              ) : null}
 
-              <li className="nav-item">
-                <a href="/register" className="nav-link">
-                  Register
-                </a>
-              </li>
-
-              <li className="nav-item" onClick={this.signOutUser}>
-                <a className="nav-link">Log Out</a>
-              </li>
+              {this.props.currentUser ? (
+                <li className="nav-item" onClick={this.signOutUser}>
+                  <span className="nav-link">Log Out</span>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>

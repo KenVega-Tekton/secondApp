@@ -11,6 +11,9 @@
     },
     "/signin": {
       "target": "http://localhost:5000"
+    },
+    "/users/me": {
+      "target": "http://localhost:5000"
     }
   },
   "dependencies": {

@@ -21,13 +21,10 @@ class Login extends Component {
     axios
       .post("/signin", data)
       .then((response) => {
-        console.log(response);
-        console.log("header token : ", response.headers["x-auth"]);
-
-        // guardar token en localstorage
         localStorage.setItem("tokenAuth", response.headers["x-auth"]);
-        //    borrar ese token cuando se carga la aplicacion
-        //luego redireccionar
+
+        this.props.updateCurrentUser(response.data);
+
         switch (response.data.role) {
           case "cajero":
             this.props.history.push("/add-order");
@@ -42,7 +39,7 @@ class Login extends Component {
             console.log("there was and error signin up");
         }
       })
-      .catch((err) => console.log("there was an error : " + err));
+      .catch((err) => console.log(err));
   }
 
   render() {
